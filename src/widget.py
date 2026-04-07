@@ -2,6 +2,10 @@ from masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_card_number: str) -> str:
+    """
+    Принимает на вход номер счета или карты в и возвращает маску номера.
+    """
+
     if "Счет" in account_card_number:
         parts = account_card_number.rsplit(" ", 1)
         account_name = parts[0]
@@ -21,4 +25,13 @@ def mask_account_card(account_card_number: str) -> str:
         return f"{card_name} {masked_card_number}"
 
 
+def get_date(date: str) -> str:
+    """
+    Изменяет дату в формате YYYY-MM-DDTHH:MM:SS.MS в формат DD.MM.YYYY
+    """
+
+    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+
+
+print(get_date("2024-03-11T02:26:18.671407"))
 print(mask_account_card("Счет 73654108430135874305"))

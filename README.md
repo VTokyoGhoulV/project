@@ -63,7 +63,7 @@ style](https://img.shields.io/badge/code%20style-PEP8-yellow)
 ## 1. Клонирование репозитория
 
 ``` bash
-git clone https://github.com/username/project.git
+https://github.com/VTokyoGhoulV/project.git
 cd project
 ```
 

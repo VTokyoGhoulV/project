@@ -1,4 +1,4 @@
-from masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_card_number: str) -> str:
@@ -31,7 +31,3 @@ def get_date(date: str) -> str:
     """
 
     return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
-
-
-print(get_date("2024-03-11T02:26:18.671407"))
-print(mask_account_card("Счет 73654108430135874305"))

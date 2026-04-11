@@ -1,9 +1,4 @@
-# Bank Data Processing
-
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![Status](https://img.shields.io/badge/status-educational%20project-green)
-![Tests](https://img.shields.io/badge/tests-pytest-orange) ![Code
-style](https://img.shields.io/badge/code%20style-PEP8-yellow)
+# Учебный проект
 
 Проект реализует набор функций для обработки банковских данных:
 маскирование карт и счетов, форматирование дат операций, фильтрацию и

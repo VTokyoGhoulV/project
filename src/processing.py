@@ -11,8 +11,8 @@ def filter_by_state(dict_list: list, state: str = "EXECUTED") -> list:
     return filtered_list
 
 
-def sort_by_date(dict_list: list, reversed: bool = True) -> list:
+def sort_by_date(dict_list: list, is_reversed: bool = True) -> list:
     """
     Принимает список словарей и возвращает отсортированный список по дате
     """
-    return sorted(dict_list, reverse=reversed, key=lambda x: x["date"])
+    return sorted(dict_list, reverse=is_reversed, key=lambda x: x["date"])

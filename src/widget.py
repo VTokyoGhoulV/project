@@ -37,5 +37,26 @@ def get_date(date: str) -> str:
     """
     Изменяет дату в формате YYYY-MM-DDTHH:MM:SS.MS в формат DD.MM.YYYY
     """
+    if len(date) > 0:
+        if len(date) == 10:
+            correct_date_split = date
 
-    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+            if "/" in date:
+                correct_date_split = date.replace("/", ".")
+            if "-" in date:
+                correct_date_split = date.replace("-", ".")
+            if "_" in date:
+                correct_date_split = date.replace("_", ".")
+
+            parts = correct_date_split.split(".")
+
+            if len(parts[0]) == 4:
+                return f"{parts[2]}.{parts[1]}.{parts[0]}"
+            else:
+                return f"{parts[0]}.{parts[1]}.{parts[2]}"
+
+        else:
+            return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+
+    else:
+        return ""

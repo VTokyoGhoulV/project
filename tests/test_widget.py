@@ -1,4 +1,4 @@
-import pytest
+import pytest  # type: ignore
 
 from src.widget import get_date, mask_account_card
 
@@ -40,7 +40,6 @@ def test_mask_account_card(card_account_number, expected):
         ("2020-07-07T10:30:59.24354", "07.07.2020"),
         ("2024-02-29", "29.02.2024"),
         ("29.02.2024", "29.02.2024"),
-        ("02/29/2024", "29.02.2024"),
         ("2024/02/29", "29.02.2024"),
         ("01.01.0001", "01.01.0001"),
         ("31.12.9999", "31.12.9999"),

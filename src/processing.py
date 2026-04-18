@@ -15,4 +15,4 @@ def sort_by_date(dict_list: list, is_reversed: bool = True) -> list:
     """
     Принимает список словарей и возвращает отсортированный список по дате
     """
-    return sorted(dict_list, reverse=is_reversed, key=lambda x: x["date"])
+    return sorted(dict_list, reverse=is_reversed, key=lambda x: (x.get("date") is None, x.get("date")))

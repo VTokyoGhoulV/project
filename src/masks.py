@@ -9,7 +9,7 @@ def get_mask_card_number(card_number: int) -> str:
         if index % 4 == 0 and index != 0:
             masked_card_number += " "
 
-        if index > 5 and index < len(str_card_number) - 4:
+        if 5 < index < len(str_card_number) - 4:
             masked_card_number += "*"
 
         else:

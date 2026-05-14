@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 def exchange_currency(transaction: dict) -> float | None:
-    """ Выдает сумму транзакции, обращается на сайт для конвертации валют при необходимости """
+    """Выдает сумму транзакции, обращается на сайт для конвертации валют при необходимости"""
 
     if transaction["operationAmount"]["currency"]["code"] == "RUB":
         return float(transaction["operationAmount"]["amount"])

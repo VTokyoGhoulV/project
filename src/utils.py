@@ -3,6 +3,7 @@ import os
 
 
 def json_to_python(file_path: str) -> list:
+    """ Возвращает список словарей с данными транзакций из json файла"""
 
     if not os.path.exists(file_path):  # Проверка существует ли файл
         print("Файла не существует")

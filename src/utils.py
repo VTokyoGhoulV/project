@@ -4,12 +4,12 @@ import os
 
 def json_to_python(file_path: str) -> list:
 
-    if not os.path.exists(file_path):
-        print("Файла не существует")  # Проверка существует ли файл
+    if not os.path.exists(file_path):  # Проверка существует ли файл
+        print("Файла не существует")
         return []
 
-    if os.path.getsize(file_path) == 0:
-        print("Пустой файл")  # Проверка пустой ли файл
+    if os.path.getsize(file_path) == 0:  # Проверка пустой ли файл
+        print("Пустой файл")
         return []
 
     with open(file_path, "r", encoding="utf-8") as json_file:

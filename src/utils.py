@@ -27,5 +27,5 @@ def json_to_python(file_path: str) -> list:
 
         except json.JSONDecodeError:
 
-            print("Ошибка! Файл содержить не корректный JSON")
+            print("Ошибка! Файл содержит не корректный JSON")
             return []

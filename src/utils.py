@@ -13,7 +13,7 @@ logger.addHandler(handler)
 def json_to_python(file_path: str) -> list:
     """Возвращает список словарей с данными транзакций из json файла"""
 
-    logger.info("Начало перевода из json в python")
+    logger.info(f"Начало перевода из json в python. Путь до файла: {file_path}")
     if not os.path.exists(file_path):
         logger.warning("Файла не существует")# Проверка существует ли файл
         print("Файла не существует")

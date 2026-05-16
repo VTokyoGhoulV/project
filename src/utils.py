@@ -1,7 +1,6 @@
 import json
-import os
 import logging
-
+import os
 
 logger = logging.getLogger("utils_log")
 logger.setLevel(logging.INFO)
@@ -10,17 +9,18 @@ formater = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message
 handler.setFormatter(formater)
 logger.addHandler(handler)
 
+
 def json_to_python(file_path: str) -> list:
     """Возвращает список словарей с данными транзакций из json файла"""
 
     logger.info(f"Начало перевода из json в python. Путь до файла: {file_path}")
     if not os.path.exists(file_path):
-        logger.warning("Файла не существует")# Проверка существует ли файл
+        logger.warning("Файла не существует")  # Проверка существует ли файл
         print("Файла не существует")
         return []
 
     if os.path.getsize(file_path) == 0:
-        logger.warning("Пустой файл")# Проверка пустой ли файл
+        logger.warning("Пустой файл")  # Проверка пустой ли файл
         print("Пустой файл")
         return []
 

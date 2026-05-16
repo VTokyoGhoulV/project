@@ -7,6 +7,7 @@ formater = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message
 handler.setFormatter(formater)
 logger.addHandler(handler)
 
+
 def get_mask_card_number(card_number: int) -> str:
     """
     Принимает на вход номер карты в виде числа и возвращает маску номера.

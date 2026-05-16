@@ -1,4 +1,4 @@
-import time
+import datetime
 from functools import wraps
 
 
@@ -13,14 +13,14 @@ def log(file_name: None | str = None):  # type: ignore
         @wraps(func)
         def inner(*args, **kwargs):  # type: ignore
 
-            start_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+            start_time = datetime.datetime.now()
 
             try:
 
                 result = func(*args, **kwargs)
-                end_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+                end_time = datetime.datetime.now()
                 log_message = (
-                    f"FuncName: {func.__name__}. Status: ok. Output: {result}. Start: {start_str} End: {end_str}\n"
+                    f"FuncName: {func.__name__}. Status: ok. Output: {result}. Start: {start_time} End: {end_time}\n"
                 )
 
                 if file_name:
@@ -34,11 +34,11 @@ def log(file_name: None | str = None):  # type: ignore
 
             except Exception as e:
 
-                end_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                end_time = datetime.datetime.now()
 
                 log_error_message = (
                     f"FuncName: {func.__name__}. Error: {type(e).__name__}: {e}. "
-                    f"Inputs: {args}, {kwargs} Start: {start_str} End: {end_str}\n"
+                    f"Inputs: {args}, {kwargs} Start: {start_time} End: {end_time}\n"
                 )
 
                 if file_name:

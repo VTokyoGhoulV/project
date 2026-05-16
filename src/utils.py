@@ -1,15 +1,26 @@
 import json
+import logging
 import os
+
+logger = logging.getLogger("utils_log")
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler("logs/utils_log.log", "w", encoding="utf-8")
+formater = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+handler.setFormatter(formater)
+logger.addHandler(handler)
 
 
 def json_to_python(file_path: str) -> list:
     """Возвращает список словарей с данными транзакций из json файла"""
 
-    if not os.path.exists(file_path):  # Проверка существует ли файл
+    logger.info(f"Начало перевода из json в python. Путь до файла: {file_path}")
+    if not os.path.exists(file_path):
+        logger.warning("Файла не существует")  # Проверка существует ли файл
         print("Файла не существует")
         return []
 
-    if os.path.getsize(file_path) == 0:  # Проверка пустой ли файл
+    if os.path.getsize(file_path) == 0:
+        logger.warning("Пустой файл")  # Проверка пустой ли файл
         print("Пустой файл")
         return []
 
@@ -20,13 +31,15 @@ def json_to_python(file_path: str) -> list:
             operations = json.load(json_file)
 
             if type(operations) is list:  # Проверка является ли содержимое файла списком
+                logger.info("Перевод из json в python")
                 return operations
 
             else:
+                logger.warning("Содержимое не является списком")
                 print("Содержимое не является списком")
                 return []
 
         except json.JSONDecodeError:
-
+            logger.error("Ошибка! Файл содержит не корректный JSON")
             print("Ошибка! Файл содержит не корректный JSON")
             return []

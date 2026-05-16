@@ -3,7 +3,7 @@ import logging
 import os
 
 logger = logging.getLogger("utils_log")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler("logs/utils_log.log", "w", encoding="utf-8")
 formater = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formater)

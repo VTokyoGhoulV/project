@@ -4,7 +4,6 @@ import os
 
 import pandas as pd
 
-
 json_logger = logging.getLogger("utils_json_log")
 json_logger.setLevel(logging.DEBUG)
 
@@ -83,11 +82,12 @@ def csv_to_python(file_path: str) -> list:
 
         csv_logger.info("Преобразование из csv в python")
 
-        df = pd.read_csv(file_path, sep=";", encoding='utf-8') #type: ignore
+        df = pd.read_csv(file_path, sep=";", encoding="utf-8")  # type: ignore
 
-        return df.to_dict(orient="records") # type: ignore[no-any-return]
+        return df.to_dict(orient="records")  # type: ignore[no-any-return]
 
     return []
+
 
 def xlsx_to_python(file_path: str) -> list:
     """Возвращает список словарей с данными транзакций из xlsx файла"""
@@ -100,6 +100,6 @@ def xlsx_to_python(file_path: str) -> list:
 
         df = pd.read_excel(file_path)
 
-        return df.to_dict(orient="records") # type: ignore[no-any-return]
+        return df.to_dict(orient="records")  # type: ignore[no-any-return]
 
     return []

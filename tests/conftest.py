@@ -1,6 +1,8 @@
-import pytest
 import tempfile
 from pathlib import Path
+
+import pytest
+
 
 @pytest.fixture
 def dict_list():
@@ -83,7 +85,7 @@ def transactions():
 
 @pytest.fixture
 def temp_csv_file():
-    temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False, encoding='utf-8')
+    temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False, encoding="utf-8")
     temp_path = Path(temp_file.name)
     temp_file.close()
     yield temp_path

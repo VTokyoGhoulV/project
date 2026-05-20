@@ -1,5 +1,6 @@
-import pytest  # type: ignore
-
+import pytest
+import tempfile
+from pathlib import Path
 
 @pytest.fixture
 def dict_list():
@@ -78,3 +79,21 @@ def transactions():
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+@pytest.fixture
+def temp_csv_file():
+    temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False, encoding='utf-8')
+    temp_path = Path(temp_file.name)
+    temp_file.close()
+    yield temp_path
+    if temp_path.exists():
+        temp_path.unlink()
+
+
+@pytest.fixture
+def temp_xlsx_file():
+    """Фикстура для создания временного XLSX файла"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        file_path = Path(tmpdir) / "test_data.xlsx"
+        yield file_path

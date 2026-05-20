@@ -1,11 +1,11 @@
 # Банковские операции
 
-![Python](https://img.shields.io/badge/Python-3.13+-blue)
+![Python](https://img.shields.io/badge/Python-3.14+-blue)
 ![Pytest](https://img.shields.io/badge/tests-pytest-green)
 ![Poetry](https://img.shields.io/badge/package_manager-poetry-purple)
 ![Status](https://img.shields.io/badge/status-learning_project-orange)
 
-Учебный Python-проект для обработки банковских транзакций: маскирования номеров карт и счетов, форматирования дат, фильтрации и сортировки операций, работы с генераторами и логирования вызовов функций.
+Учебный Python-проект для обработки банковских транзакций: маскирования номеров карт и счетов, форматирования дат, фильтрации и сортировки операций, работы с генераторами, чтения данных из файлов, конвертации валют и логирования вызовов функций.
 
 ## Оглавление
 
@@ -24,6 +24,9 @@
 - Фильтрация транзакций по валюте.
 - Получение описаний транзакций через генератор.
 - Генерация номеров карт в формате `XXXX XXXX XXXX XXXX`.
+- Получение суммы транзакции в рублях с автоматической конвертацией валют через внешний API.
+- Чтение данных о транзакциях из файлов `JSON`, `CSV` и `XLSX`.
+- Проверка существования и содержимого файлов перед обработкой.
 - Логирование результата или ошибки выполнения функции в консоль или файл.
 
 ## Структура проекта
@@ -33,18 +36,23 @@
 ├── src/
 │   ├── __init__.py
 │   ├── decorators.py
+│   ├── external_api.py
 │   ├── generators.py
 │   ├── masks.py
 │   ├── processing.py
+│   ├── utils.py
 │   └── widget.py
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py
 │   ├── test_decorators.py
+│   ├── test_external_api.py
 │   ├── test_generator.py
 │   ├── test_masks.py
 │   ├── test_processing.py
+│   ├── test_utils.py
 │   └── test_widget.py
+├── .env.sample
 ├── pyproject.toml
 ├── poetry.lock
 └── README.md
@@ -69,6 +77,12 @@ poetry install --with dev,lint
 
 ```bash
 poetry shell
+```
+
+Для работы конвертации валют создайте файл `.env` по образцу `.env.sample` и укажите API-ключ:
+
+```env
+API_KEY="your api key"
 ```
 
 ## Использование
@@ -165,6 +179,39 @@ divide_numbers(10, 2)
 
 Декоратор `log` записывает имя функции, статус выполнения, результат или ошибку, входные данные и время начала/окончания вызова.
 
+### Конвертация валют
+
+```python
+from src.external_api import exchange_currency
+
+transaction = {
+    "operationAmount": {
+        "amount": "100",
+        "currency": {"code": "USD"},
+    }
+}
+
+print(exchange_currency(transaction))
+```
+
+Если валюта операции уже указана в рублях, функция возвращает исходную сумму. Для других валют сумма конвертируется в рубли через внешний API.
+
+### Чтение транзакций из файлов
+
+```python
+from src.utils import csv_to_python, json_to_python, xlsx_to_python
+
+json_operations = json_to_python("operations.json")
+csv_operations = csv_to_python("transactions.csv")
+xlsx_operations = xlsx_to_python("transactions.xlsx")
+
+print(json_operations)
+print(csv_operations)
+print(xlsx_operations)
+```
+
+Перед чтением файла выполняется проверка его существования и содержимого. При ошибках функции возвращают пустой список.
+
 ## Тестирование и качество кода
 
 Запуск тестов:
@@ -190,9 +237,11 @@ poetry run isort --check-only src tests
 
 ## Требования
 
-- Python 3.13+
+- Python 3.14+
 - Poetry
 - pytest для запуска тестов
+- requests и python-dotenv для обращения к API конвертации валют
+- pandas и openpyxl для обработки файлов CSV и XLSX
 - flake8, mypy, black и isort для проверок качества кода
 
 ## Автор

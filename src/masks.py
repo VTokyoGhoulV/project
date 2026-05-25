@@ -36,7 +36,7 @@ def get_mask_account(account_number: int) -> str:
     """
     logger.info(f"Начало маскировки номера счета. Номер счета: {account_number}")
     masked_account_number = "**"
-    if len(str(account_number)) == 20:
+    if len(str(account_number)) > 4:
         for index, char in enumerate(str(account_number)):
             if index >= len(str(account_number)) - 4:
                 masked_account_number += char

@@ -13,7 +13,7 @@ def mask_account_card(account_card_number: str) -> str:
             account_number = parts[1]
             spaceless_account_number = account_number.replace(" ", "")
 
-            if len(spaceless_account_number) == 20:
+            if len(spaceless_account_number) > 4 and spaceless_account_number.isdigit():
 
                 masked_account_number = get_mask_account(int(spaceless_account_number))
 

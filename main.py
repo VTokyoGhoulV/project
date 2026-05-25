@@ -18,14 +18,17 @@ if __name__ == "__main__":
 
         if file_choose == "1":
             transactions = json_to_python("C:/Users/TokyoGhoul/PycharmProjects/project/data/operations.json")
+            print("Для обработки выбран JSON файл")
             break
 
         elif file_choose == "2":
             transactions = csv_to_python("C:/Users/TokyoGhoul/PycharmProjects/project/data/transactions.csv")
+            print("Для обработки выбран CSV файл")
             break
 
         elif file_choose == "3":
             transactions = xlsx_to_python("C:/Users/TokyoGhoul/PycharmProjects/project/data/transactions_excel.xlsx")
+            print("Для обработки выбран XLSX файл")
             break
 
         else:
@@ -35,18 +38,21 @@ if __name__ == "__main__":
 
     while True:
 
-        user_choose = input("\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING: ").upper()
+        user_choose = input("Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING: ").upper()
 
         if user_choose == "EXECUTED":
             transactions = filter_by_state(transactions, "EXECUTED")
+            print("Операции отфильтрованы по статусу \"EXECUTED\"")
             break
 
         elif user_choose == "CANCELED":
             transactions = filter_by_state(transactions, "CANCELED")
+            print("Операции отфильтрованы по статусу \"CANCELED\"")
             break
 
         elif user_choose == "PENDING":
             transactions = filter_by_state(transactions, "PENDING")
+            print("Операции отфильтрованы по статусу \"PENDING\"")
             break
 
         else:

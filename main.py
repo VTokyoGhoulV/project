@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     while True:
 
-        file_choose = input("Введите номер: ")
+        file_choose = input("Выберите необходимый пункт меню: ")
 
         if file_choose == "1":
             transactions = json_to_python("C:/Users/TokyoGhoul/PycharmProjects/project/data/operations.json")

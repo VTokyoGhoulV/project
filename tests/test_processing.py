@@ -1,6 +1,6 @@
 import pytest  # type: ignore
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, process_bank_operations, process_bank_search, sort_by_date
 
 # тесты функции filter_by_state
 by_state_default = [
@@ -106,3 +106,115 @@ def test_sort_by_date_with_none(combined_test_list):
 )
 def test_sort_by_date_reversed_with_none(combined_test_list, is_reversed, expected):
     assert sort_by_date(combined_test_list, is_reversed) == expected
+
+
+# Тесты для функции process_bank_operations
+
+
+def test_count_single_category(transactions):
+    """Тест: подсчёт одной существующей категории"""
+    categories = ["Перевод организации"]
+    result = process_bank_operations(transactions, categories)
+
+    # "Перевод организации" встречается 2 раза
+    assert result == {"Перевод организации": 2}
+
+
+def test_count_multiple_categories(transactions):
+    """Тест: подсчёт нескольких существующих категорий"""
+    categories = ["Перевод организации", "Перевод со счета на счет"]
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {"Перевод организации": 2, "Перевод со счета на счет": 2}
+
+
+def test_category_not_exists(transactions):
+    """Тест: категория, которой нет в транзакциях"""
+    categories = ["Покупка в магазине"]
+    result = process_bank_operations(transactions, categories)
+
+    # Несуществующая категория должна вернуть 0
+    assert result == {"Покупка в магазине": 0}
+
+
+def test_mixed_categories(transactions):
+    """Тест: смесь существующих и несуществующих категорий"""
+    categories = ["Перевод организации", "Перевод с карты на карту", "Оплата услуг"]
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {"Перевод организации": 2, "Перевод с карты на карту": 1, "Оплата услуг": 0}
+
+
+def test_empty_categories_list(transactions):
+    """Тест: пустой список категорий"""
+    categories = []
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {}
+
+
+def test_empty_data_list(transactions):
+    """Тест: пустой список транзакций"""
+    categories = ["Перевод организации", "Перевод со счета на счет"]
+    result = process_bank_operations([], categories)
+
+    # При пустых данных все категории должны быть 0
+    assert result == {"Перевод организации": 0, "Перевод со счета на счет": 0}
+
+
+def test_case_sensitivity(transactions):
+    """Тест: проверка чувствительности к регистру"""
+    categories = ["перевод организации"]  # с маленькой буквы
+    result = process_bank_operations(transactions, categories)
+
+    # В данных "Перевод организации" (с большой буквы), поэтому должно быть 0
+    assert result == {"перевод организации": 0}
+
+
+def test_count_all_unique_descriptions(transactions):
+    """Тест: подсчёт всех уникальных описаний"""
+    categories = ["Перевод организации", "Перевод со счета на счет", "Перевод с карты на карту"]
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {"Перевод организации": 2, "Перевод со счета на счет": 2, "Перевод с карты на карту": 1}
+
+
+def test_duplicate_categories_in_input(transactions):
+    """Тест: дубликаты категорий в списке для поиска"""
+    categories = ["Перевод организации", "Перевод организации", "Перевод со счета на счет"]
+    result = process_bank_operations(transactions, categories)
+
+    # Функция должна корректно обработать дубликаты
+    assert result == {"Перевод организации": 2, "Перевод со счета на счет": 2}
+
+
+# Тесты для функции process_bank_search
+def test_search_exact_phrase(transactions):
+    """Тест поиска точной фразы"""
+    result = process_bank_search(transactions, "Перевод организации")
+    assert len(result) == 2
+    assert result[0]["id"] == 939719570
+    assert result[1]["id"] == 594226727
+    assert all(item["description"] == "Перевод организации" for item in result)
+
+
+def test_search_case_insensitive(transactions):
+    """Тест регистронезависимого поиска"""
+    result = process_bank_search(transactions, "перевод")
+    assert len(result) == 5  # Все транзакции имеют слово "перевод"
+    assert all("перевод" in item["description"].lower() for item in result)
+
+
+def test_search_partial_match(transactions):
+    """Тест поиска по части слова"""
+    result = process_bank_search(transactions, "организ")
+    assert len(result) == 2
+    assert result[0]["id"] == 939719570
+    assert result[1]["id"] == 594226727
+
+
+def test_search_no_matches(transactions):
+    """Тест когда совпадений нет"""
+    result = process_bank_search(transactions, "несуществующая строка")
+    assert len(result) == 0
+    assert result == []

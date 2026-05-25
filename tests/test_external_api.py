@@ -17,6 +17,7 @@ def test_exchange_currency_rub():
     transaction = {"operationAmount": {"amount": "100", "currency": {"code": "RUB"}}}
     assert exchange_currency(transaction) == 100
 
+
 @patch("requests.get")
 def test_exchange_currency_none(mock_get):
     mock_get.return_value.json.return_value = {}

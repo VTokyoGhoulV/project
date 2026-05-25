@@ -6,11 +6,12 @@ def filter_by_currency(transactions: list, currency: str) -> Iterator:
     Фильтрует список транзакций по валюте
     """
     for transaction in transactions:
-        try:
+        if "operationAmount" in transaction:
             if transaction["operationAmount"]["currency"]["code"] == currency:
                 yield transaction
-        except KeyError, TypeError, LookupError:
-            continue
+        elif "currency_code" in transaction:
+            if transaction["currency_code"] == currency:
+                yield transaction
 
 
 def transaction_descriptions(transactions: list) -> Iterator:

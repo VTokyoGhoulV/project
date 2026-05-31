@@ -11,7 +11,7 @@ from src.widget import get_date, mask_account_card
         ("Visa Platinum 6831982476737658", "Visa Platinum 6831 98** **** 7658"),
     ],
 )
-def test_mask_account_card_vaid(account_number, expected):
+def test_mask_account_card_valid(account_number, expected):
     assert mask_account_card(account_number) == expected
 
 
